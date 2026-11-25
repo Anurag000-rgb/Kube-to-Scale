@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kube to Scale — Interactive Kubernetes &amp; CNCF Visual Learning</title>
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=11" />
+</head>
+<body>
+
+  <!-- =========================== TOP NAVBAR =========================== -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle course menu">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"/></svg>
+      </button>
+      <a href="#learn" class="brand" onclick="switchTab('learn'); return false;">
+        <div class="brand-icon">
+          <img src="logo.png" alt="Kube to Scale Logo" class="brand-logo-img" />
+        </div>
+        <span class="brand-name">Kube to<span>Scale</span></span>
+      </a>
+    </div>
+
+    <nav class="topbar-center nav-tabs" aria-label="Main sections">
+      <button class="nav-tab active" data-tab="learn" onclick="switchTab('learn')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        Learn
+      </button>
+      <button class="nav-tab" data-tab="practice" onclick="switchTab('practice')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Practice
+      </button>
+      <button class="nav-tab" data-tab="lab" onclick="switchTab('lab')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3h6v5l4.5 9A2 2 0 0 1 17.7 20H6.3a2 2 0 0 1-1.8-3L9 8V3z"/></svg>
+        Design Lab
+      </button>
+      <button class="nav-tab" data-tab="cheatsheets" onclick="switchTab('cheatsheets')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+        Cheatsheets
+      </button>
+      <button class="nav-tab" data-tab="resources" onclick="switchTab('resources')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Videos &amp; Refs
+      </button>
+    </nav>
+
+    <div class="topbar-right">
+      <button class="search-trigger" onclick="openSearchModal()" aria-label="Search lessons and concepts">
+        <span style="display:flex;align-items:center;gap:6px;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35" stroke-linecap="round"/></svg>
+          <span class="search-trigger-txt">Search lessons &amp; concepts...</span>
+        </span>
+        <span class="kbd">⌘K</span>
+      </button>
+
+      <div class="cert-pills desktop-certs" id="globalCertPills" role="group" aria-label="Certification track filter">
+        <button class="cert-pill active" data-cert="ALL" onclick="setGlobalCert('ALL')">ALL</button>
+        <button class="cert-pill" data-cert="CKA" onclick="setGlobalCert('CKA')">CKA</button>
+        <button class="cert-pill" data-cert="CKAD" onclick="setGlobalCert('CKAD')">CKAD</button>
+        <button class="cert-pill" data-cert="CKS" onclick="setGlobalCert('CKS')">CKS</button>
+        <button class="cert-pill" data-cert="CNPE" onclick="setGlobalCert('CNPE')">CNPE</button>
+        <button class="cert-pill" data-cert="OPERATOR" onclick="setGlobalCert('OPERATOR')">OPERATOR</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Tab Strip -->
+  <div class="mobile-subbar">
+    <button class="nav-tab active" data-tab="learn" onclick="switchTab('learn')">Learn</button>
+    <button class="nav-tab" data-tab="practice" onclick="switchTab('practice')">Practice</button>
+    <button class="nav-tab" data-tab="lab" onclick="switchTab('lab')">Design Lab</button>
+    <button class="nav-tab" data-tab="cheatsheets" onclick="switchTab('cheatsheets')">Cheatsheets</button>
+    <button class="nav-tab" data-tab="resources" onclick="switchTab('resources')">Videos &amp; Refs</button>
+  </div>
+  <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleMobileSidebar(false)"></div>
+
+  <!-- =========================== VIEW 1: LEARN =========================== -->
+  <main id="view-learn" class="view active">
+    <aside class="left-sidebar" id="leftSidebar">
+      <div class="sidebar-head">
+        <span class="sidebar-head-title">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+          Course
+        </span>
+        <span class="sidebar-head-count" id="sidebarLessonCount">74 lessons</span>
+        <button class="sidebar-close-btn" aria-label="Close course sidebar" onclick="toggleMobileSidebar(false)">✕</button>
+      </div>
+      <div class="sidebar-cert-wrap">
+        <div class="cert-pills" id="sidebarCertPills" style="justify-content:space-between;">
+          <button class="cert-pill active" data-cert="ALL" onclick="setGlobalCert('ALL')">ALL</button>
+          <button class="cert-pill" data-cert="CKA" onclick="setGlobalCert('CKA')">CKA</button>
+          <button class="cert-pill" data-cert="CKAD" onclick="setGlobalCert('CKAD')">CKAD</button>
+          <button class="cert-pill" data-cert="CKS" onclick="setGlobalCert('CKS')">CKS</button>
+          <button class="cert-pill" data-cert="CNPE" onclick="setGlobalCert('CNPE')">CNPE</button>
+          <button class="cert-pill" data-cert="OPERATOR" onclick="setGlobalCert('OPERATOR')">OPERATOR</button>
+        </div>
+      </div>
+      <div class="course-tree" id="courseTree"></div>
+      <div class="sidebar-footer">
+        <div class="progress-row">
+          <span>PROGRESS</span>
+          <strong id="sidebarProgressText">0 / 74</strong>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="sidebarProgressBar"></div></div>
+      </div>
+    </aside>
+
+    <section class="center-stage">
+      <div class="stage-wrap">
+        <div class="lesson-head" style="flex-direction:column;align-items:stretch;gap:8px;">
+          <div>
+            <div class="breadcrumb" id="lessonBreadcrumb"></div>
+            <h1 class="lesson-title" id="lessonTitle"></h1>
+            <p class="lesson-sub" id="lessonSubtitle"></p>
+            <p class="lesson-topic-desc" id="lessonTopicDesc"></p>
+          </div>
+          <div class="head-meta-row">
+            <div class="head-pills" id="lessonHeadPills"></div>
+            <div class="res-btn-row">
+              <button class="btn btn-sm res-toggle-btn" id="topicRefsBtn" onclick="toggleRefPanel('topicRefs')">📚 References ▾</button>
+              <button class="btn btn-sm res-toggle-btn" id="topicVideosBtn" onclick="toggleRefPanel('topicVideos')">▶ YouTube Videos ▾</button>
+            </div>
+          </div>
+          <div id="topicRefsDrawer" class="ref-drawer"></div>
+          <div id="topicVideosDrawer" class="ref-drawer"></div>
+        </div>
+
+        <div class="metrics-bar">
+          <div class="metrics-grid" id="metricsGrid"></div>
+          <div class="stage-btns">
+            <button class="btn" id="autoPlayBtn" onclick="toggleAutoPlay()" title="Auto-advance through lesson steps">▶ Auto</button>
+            <button class="btn" id="speedBtn" onclick="cycleAnimSpeed()" title="Cycle packet animation speed">1x</button>
+            <button class="btn" onclick="replayLearnStep()" title="Replay step animation (R)">↻ Replay</button>
+            <button class="btn" onclick="togglePause()" title="Pause or resume animations (Space)" style="min-width:80px;">
+              <span id="pauseIcon">⏸</span><span id="pauseLabel">Pause</span>
+            </button>
+            <button class="btn btn-sm" id="zoomPanBtn" onclick="toggleDiagramZoom()" title="Zoom & pan diagram on smaller screens">🔍 Fit</button>
+          </div>
+        </div>
+
+        <div class="diagram-card" id="learnDiagramCard">
+          <div class="diagram-viewport" id="learnViewport">
+            <svg id="learnSvg" class="iso-svg" viewBox="0 0 820 352" role="img" aria-label="Interactive animated Kubernetes architecture diagram"></svg>
+            <div class="node-tooltip" id="nodeTooltip">
+              <div class="tt-title" id="ttTitle"></div>
+              <div class="tt-role" id="ttRole"></div>
+              <div class="tt-desc" id="ttDesc"></div>
+            </div>
+          </div>
+          <div class="trace-dock" id="learnTraceDock"></div>
+          <div class="legend-bar">
+            <div class="legend-items">
+              <span class="legend-item"><span class="legend-dot" style="background:#E07B24;"></span>request / write</span>
+              <span class="legend-item"><span class="legend-dot" style="background:#1E824C;"></span>response / ok</span>
+              <span class="legend-item"><span class="legend-dot" style="background:#7B52AB;"></span>watch / sync</span>
+              <span class="legend-item"><span class="legend-dot" style="background:#D13B3B;"></span>blocked / failed</span>
+            </div>
+            <span class="legend-hint" style="font-size:10px;">Tap or hover any 2.5D block to inspect</span>
+          </div>
+        </div>
+
+        <div class="timeline-card">
+          <div class="timeline-head">
+            <span>IN THIS LESSON</span>
+            <span id="timelineCounter" style="color:var(--ink);">Step 1 of 5</span>
+          </div>
+          <div class="timeline-steps" id="timelineSteps"></div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="right-panel">
+      <div>
+        <div class="step-top-row">
+          <span class="step-counter" id="guideStepCounter">STEP 1 / 5</span>
+          <span class="cat-pill" id="guideCatPill">ARCHITECTURE</span>
+        </div>
+        <h2 class="guide-title" id="guideTitle"></h2>
+        <div class="guide-body" id="guideBody"></div>
+        <div id="guideCodeBlock"></div>
+        <div class="good-to-know">
+          <div class="gtk-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1E7E45" stroke-width="2.2"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>
+          </div>
+          <div>
+            <div class="gtk-label">GOOD TO KNOW</div>
+            <div class="gtk-text" id="guideTip"></div>
+          </div>
+        </div>
+        <div class="res-btn-row" style="margin-top:10px;">
+          <button class="btn btn-sm res-toggle-btn" id="stepRefsBtn" onclick="toggleRefPanel('stepRefs')">📚 Section Refs ▾</button>
+          <button class="btn btn-sm res-toggle-btn" id="stepVideosBtn" onclick="toggleRefPanel('stepVideos')">▶ Section Video ▾</button>
+        </div>
+        <div id="stepRefsDrawer" class="ref-drawer"></div>
+        <div id="stepVideosDrawer" class="ref-drawer"></div>
+      </div>
+
+      <div class="nav-footer">
+        <div>
+          <div class="nav-btn-row">
+            <button class="btn" id="prevStepBtn" onclick="prevStep()">← Back</button>
+            <button class="btn btn-mint nav-next" id="nextStepBtn" onclick="nextStep()">
+              <span id="nextStepLabel">Next</span><span>→</span>
+            </button>
+          </div>
+          <div class="shortcut-hint" style="margin-top:8px;">
+            <span class="kbd">←</span><span class="kbd">→</span> step <span>·</span>
+            <span class="kbd">R</span> replay <span>·</span>
+            <span class="kbd">Space</span> pause
+          </div>
+        </div>
+
+        <div class="checklist-box">
+          <div class="checklist-head">YOU'LL LEARN</div>
+          <ul class="checklist-ul" id="learnChecklist"></ul>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- =========================== VIEW 2: PRACTICE =========================== -->
+  <main id="view-practice" class="view">
+    <div class="container-md">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">CNCF Exam Drills &amp; Real-World Scenario Case Bank</div>
+          <h1 class="page-title">Practice &amp; Scenarios</h1>
+          <p class="page-sub">53 exam-grade troubleshooting, CKA &amp; Operator lab drills + 24 production &amp; interview Q&amp;As with technical answers, YAML, and layman analogies.</p>
+        </div>
+        <div class="cert-pills" id="practiceModePills">
+          <button class="cert-pill active" data-pmode="drills" onclick="setPracticeMode('drills')">🎯 Exam Drills (53)</button>
+          <button class="cert-pill" data-pmode="scenarios" onclick="setPracticeMode('scenarios')">💬 Scenario Q&amp;A Bank (24)</button>
+        </div>
+      </div>
+
+      <!-- MODE A: EXAM DRILLS -->
+      <div id="practiceDrillsWrap" style="display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
+          <div class="cert-pills" id="practiceFilterPills">
+            <button class="cert-pill active" data-pcert="ALL" onclick="setPracticeFilter('ALL')">ALL</button>
+            <button class="cert-pill" data-pcert="CKA" onclick="setPracticeFilter('CKA')">CKA</button>
+            <button class="cert-pill" data-pcert="CKAD" onclick="setPracticeFilter('CKAD')">CKAD</button>
+            <button class="cert-pill" data-pcert="CKS" onclick="setPracticeFilter('CKS')">CKS</button>
+            <button class="cert-pill" data-pcert="CNPE" onclick="setPracticeFilter('CNPE')">CNPE</button>
+            <button class="cert-pill" data-pcert="OPERATOR" onclick="setPracticeFilter('OPERATOR')">OPERATOR</button>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div class="btn" style="cursor:default;">Score: <span id="practiceScore" style="color:var(--ok);">0</span> / <span id="practiceTotal">53</span></div>
+            <button class="btn" onclick="resetPractice()">↻ Reset</button>
+          </div>
+        </div>
+        <div class="practice-card" id="practiceCard"></div>
+      </div>
+
+      <!-- MODE B: SCENARIO Q&A BANK -->
+      <div id="practiceScenariosWrap" style="display:none;flex-direction:column;gap:12px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
+          <div class="cert-pills" id="scenarioCatPills" style="flex-wrap:wrap;">
+            <button class="cert-pill active" data-scat="ALL" onclick="setScenarioCat('ALL')">ALL</button>
+            <button class="cert-pill" data-scat="Architecture & HA" onclick="setScenarioCat('Architecture & HA')">Architecture &amp; HA</button>
+            <button class="cert-pill" data-scat="Deployments & Scaling" onclick="setScenarioCat('Deployments & Scaling')">Deployments &amp; Scaling</button>
+            <button class="cert-pill" data-scat="Troubleshooting" onclick="setScenarioCat('Troubleshooting')">Troubleshooting</button>
+            <button class="cert-pill" data-scat="Security & Compliance" onclick="setScenarioCat('Security & Compliance')">Security &amp; Compliance</button>
+            <button class="cert-pill" data-scat="Storage & Backup" onclick="setScenarioCat('Storage & Backup')">Storage &amp; Backup</button>
+            <button class="cert-pill" data-scat="Networking & Mesh" onclick="setScenarioCat('Networking & Mesh')">Networking &amp; Mesh</button>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <input type="text" id="scenarioSearchInput" class="scenario-search" placeholder="Filter scenarios (Velero, Blue-Green, HPA...)" oninput="setScenarioSearch(this.value)" />
+            <span class="btn btn-sm" style="cursor:default;">Reviewed: <span id="scenarioReviewedCount" style="color:var(--ok);">0</span> / 24</span>
+          </div>
+        </div>
+        <div id="scenarioBankList" style="display:flex;flex-direction:column;gap:12px;"></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- =========================== VIEW 3: DESIGN LAB =========================== -->
+  <main id="view-lab" class="view">
+    <div class="container-lg">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Interactive Live Kubernetes Architecture Simulator &amp; Fault Lab</div>
+          <h1 class="page-title">Cluster Design Lab</h1>
+          <p class="page-sub">Dial live traffic load, solve guided architecture missions, toggle 16 real guardrails, inspect YAML mechanics, and inject attacks or controller failures.</p>
+        </div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center;">
+          <button class="btn btn-sm" onclick="labPreset('cks')">🛡 Zero-Trust CKS</button>
+          <button class="btn btn-sm" onclick="labPreset('ha')">⚡ High-Avail HA</button>
+          <button class="btn btn-sm" onclick="labPreset('operator')">⚙ Operator HA</button>
+          <button class="btn btn-mint btn-sm" onclick="labPreset('hardened')">★ Full Prod Stack</button>
+          <button class="btn btn-sm" onclick="exportLabSummary()">⎘ Export Blueprint</button>
+          <button class="btn btn-sm" onclick="labPreset('bare')">Reset Bare</button>
+        </div>
+      </div>
+
+      <div class="lab-grid">
+        <div class="lab-sidebar-col">
+          <div class="lab-panel">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;">
+              <span class="lab-panel-title">Incoming Traffic Load</span>
+              <span class="badge-chip" id="labLoadBadge">1x · 120 RPS</span>
+            </div>
+            <div class="load-slider-wrap">
+              <input type="range" id="labLoadSlider" min="1" max="10" value="1" oninput="setLabLoad(this.value)" />
+              <div class="load-scale-labels">
+                <span>1x Calm</span>
+                <span>5x Busy</span>
+                <span>10x Flash Spike</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="lab-panel">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;">
+              <span class="lab-panel-title">Cluster Guardrails (16)</span>
+              <span class="badge-chip" id="labActiveCount">0 / 16 ON</span>
+            </div>
+            <div class="cert-pills" id="labGroupPills">
+              <button class="cert-pill active" data-lgrp="ALL" onclick="setLabGroup('ALL')">ALL (16)</button>
+              <button class="cert-pill" data-lgrp="cluster" onclick="setLabGroup('cluster')">Cluster &amp; Sec (8)</button>
+              <button class="cert-pill" data-lgrp="operator" onclick="setLabGroup('operator')">Operators (8)</button>
+            </div>
+            <div class="toggle-list" id="labToggles"></div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:12px;min-width:0;">
+          <div class="gauges-row">
+            <div class="gauge-card">
+              <div class="gauge-top"><span>SECURITY</span><span class="gauge-score" id="gSecVal">0%</span></div>
+              <div class="gauge-track"><div class="gauge-bar" id="gSecBar"></div></div>
+            </div>
+            <div class="gauge-card">
+              <div class="gauge-top"><span>RELIABILITY</span><span class="gauge-score" id="gRelVal">0%</span></div>
+              <div class="gauge-track"><div class="gauge-bar" id="gRelBar"></div></div>
+            </div>
+            <div class="gauge-card">
+              <div class="gauge-top"><span>PLATFORM MATURITY</span><span class="gauge-score" id="gPlatVal">0%</span></div>
+              <div class="gauge-track"><div class="gauge-bar" id="gPlatBar"></div></div>
+            </div>
+          </div>
+
+          <div class="lab-telemetry-row" id="labTelemetryRow"></div>
+
+          <div class="lab-panel" style="gap:8px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+              <span class="lab-panel-title">Guided Architecture Missions</span>
+              <span class="badge-chip" id="labMissionProgress">0 / 6 Solved</span>
+            </div>
+            <div class="missions-grid" id="labMissionsGrid"></div>
+          </div>
+
+          <div class="lab-panel" style="gap:9px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+              <span class="lab-panel-title">Live Chaos, Security Attack &amp; Operator Fault Injection</span>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                <button class="btn btn-sm" onclick="runLabAutoSweep()">▶ Auto-Stress Audit</button>
+                <button class="btn btn-sm" onclick="triggerLabChaos('normal')">✓ Clear Incident</button>
+              </div>
+            </div>
+            <div class="chaos-group-lbl">Cluster HA, Networking &amp; Security Attacks</div>
+            <div class="chaos-row" id="labChaosBtns">
+              <button class="btn chaos-btn" data-chaos="kill-cp" onclick="triggerLabChaos('kill-cp')">⚡ Kill Control Plane Node</button>
+              <button class="btn chaos-btn" data-chaos="root-pod" onclick="triggerLabChaos('root-pod')">☠ Deploy Privileged Root Pod</button>
+              <button class="btn chaos-btn" data-chaos="lateral-scan" onclick="triggerLabChaos('lateral-scan')">🔍 Lateral Pod Scan :5432</button>
+              <button class="btn chaos-btn" data-chaos="cve-image" onclick="triggerLabChaos('cve-image')">📦 Push :latest / Unverified Image</button>
+              <button class="btn chaos-btn" data-chaos="traffic-spike" onclick="triggerLabChaos('traffic-spike')">📈 10x Flash Traffic Spike</button>
+              <button class="btn chaos-btn" data-chaos="worker-loss" onclick="triggerLabChaos('worker-loss')">🔥 Worker AZ Hardware Loss</button>
+              <button class="btn chaos-btn" data-chaos="manual-drift" onclick="triggerLabChaos('manual-drift')">✎ Manual kubectl Drift Edit</button>
+              <div class="chaos-group-lbl" style="width:100%;margin-top:4px;">Operators, Webhooks &amp; Reconciliation Faults</div>
+              <button class="btn chaos-btn" data-chaos="invalid-cr" onclick="triggerLabChaos('invalid-cr')">⚠ Invalid CR Spec</button>
+              <button class="btn chaos-btn" data-chaos="delete-db" onclick="triggerLabChaos('delete-db')">🗑 Delete CR w/ AWS RDS</button>
+              <button class="btn chaos-btn" data-chaos="status-storm" onclick="triggerLabChaos('status-storm')">🌪 Status Update Storm</button>
+              <button class="btn chaos-btn" data-chaos="kill-leader" onclick="triggerLabChaos('kill-leader')">⚡ Kill Leader Operator Pod</button>
+              <button class="btn chaos-btn" data-chaos="burst-500" onclick="triggerLabChaos('burst-500')">📊 Burst 500 CRs</button>
+            </div>
+          </div>
+
+          <div class="diagram-card" id="labDiagramCard">
+            <div class="diagram-viewport" id="labViewport">
+              <svg id="labSvg" class="iso-svg" viewBox="0 0 820 352" role="img" aria-label="Live interactive Kubernetes Design Lab cluster"></svg>
+              <div class="node-tooltip" id="labTooltip">
+                <div class="tt-title" id="labTtTitle"></div>
+                <div class="tt-role" id="labTtRole"></div>
+                <div class="tt-desc" id="labTtDesc"></div>
+              </div>
+            </div>
+            <div class="trace-dock" id="labTraceDock"></div>
+            <div class="legend-bar">
+              <div class="legend-items">
+                <span class="legend-item"><span class="legend-dot" style="background:#E07B24;"></span>ingress / attack</span>
+                <span class="legend-item"><span class="legend-dot" style="background:#1E824C;"></span>healthy / healed</span>
+                <span class="legend-item"><span class="legend-dot" style="background:#7B52AB;"></span>reconcile / quorum</span>
+                <span class="legend-item"><span class="legend-dot" style="background:#D13B3B;"></span>blocked / outage</span>
+              </div>
+              <span id="labStatusChip" style="font-weight:700;color:var(--ok);">● CLUSTER STEADY STATE</span>
+            </div>
+          </div>
+
+          <div class="lab-explainer-card" id="labExplainerCard"></div>
+
+          <div class="console-box" id="labConsole"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- =========================== VIEW 4: CHEATSHEETS =========================== -->
+  <main id="view-cheatsheets" class="view">
+    <div class="container-lg">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Production &amp; CNCF Certification Field Reference</div>
+          <h1 class="page-title">Kubernetes Cheatsheets</h1>
+          <p class="page-sub">Copy-ready YAML manifests, imperative kubectl shortcuts, architecture patterns &amp; CNCF exam weights.</p>
+        </div>
+        <div class="cert-pills" id="sheetFilterPills">
+          <button class="cert-pill active" data-scert="ALL" onclick="setSheetFilter('ALL')">ALL</button>
+          <button class="cert-pill" data-scert="CKA" onclick="setSheetFilter('CKA')">CKA</button>
+          <button class="cert-pill" data-scert="CKAD" onclick="setSheetFilter('CKAD')">CKAD</button>
+          <button class="cert-pill" data-scert="CKS" onclick="setSheetFilter('CKS')">CKS</button>
+          <button class="cert-pill" data-scert="CNPE" onclick="setSheetFilter('CNPE')">CNPE</button>
+          <button class="cert-pill" data-scert="OPERATOR" onclick="setSheetFilter('OPERATOR')">OPERATOR</button>
+        </div>
+      </div>
+      <div class="sheets-grid" id="cheatsheetsGrid"></div>
+    </div>
+  </main>
+
+  <!-- =========================== VIEW 5: VIDEOS & REFERENCES HUB =========================== -->
+  <main id="view-resources" class="view">
+    <div class="container-lg">
+      <div class="res-hero-card">
+        <div class="res-hero-top">
+          <div>
+            <div class="eyebrow">Curated CNCF &amp; Kubernetes Learning Hub</div>
+            <h1 class="page-title">YouTube Channels, Videos &amp; References</h1>
+            <p class="page-sub">Browse verified creators, topic-matched talks with summaries, and official Kubernetes docs by certification track.</p>
+          </div>
+          <div class="res-stats-row">
+            <span class="res-stat-pill">📺 13 Creators</span>
+            <span class="res-stat-pill">▶ 40 Direct Talks</span>
+            <span class="res-stat-pill">📚 74 Topic Refs</span>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
+          <div class="cert-pills" id="resourceModePills">
+            <button class="cert-pill active" data-rmode="channels" onclick="setResourceMode('channels')">📺 YouTube Channels (13)</button>
+            <button class="cert-pill" data-rmode="talks" onclick="setResourceMode('talks')">▶ Direct Video Library (40)</button>
+            <button class="cert-pill" data-rmode="docs" onclick="setResourceMode('docs')">📚 Official Docs &amp; Refs</button>
+          </div>
+          <input type="text" id="resourceSearchInput" class="res-search-input" placeholder="Search creators, Falco, etcd, client-go..." oninput="setResourceSearch(this.value)" />
+        </div>
+
+        <div class="res-toolbar">
+          <div class="cert-pills" id="resourceCertPills">
+            <button class="cert-pill active" data-rcert="ALL" onclick="setResourceCert('ALL')">ALL TRACKS</button>
+            <button class="cert-pill" data-rcert="CKA" onclick="setResourceCert('CKA')">CKA</button>
+            <button class="cert-pill" data-rcert="CKAD" onclick="setResourceCert('CKAD')">CKAD</button>
+            <button class="cert-pill" data-rcert="CKS" onclick="setResourceCert('CKS')">CKS</button>
+            <button class="cert-pill" data-rcert="CNPE" onclick="setResourceCert('CNPE')">CNPE</button>
+            <button class="cert-pill" data-rcert="OPERATOR" onclick="setResourceCert('OPERATOR')">OPERATOR</button>
+          </div>
+          <span class="badge-chip" id="resourceResultCount">Showing 13 YouTube channels</span>
+        </div>
+      </div>
+
+      <div id="resourcesContent"></div>
+    </div>
+  </main>
+
+  <!-- =========================== SEARCH MODAL (⌘K) =========================== -->
+  <div class="modal-backdrop" id="searchModal" onclick="if(event.target===this) closeSearchModal()">
+    <div class="search-modal">
+      <div class="search-row">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#767168" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35" stroke-linecap="round"/></svg>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search lessons, steps, etcd, CEL, NetPol, Karpenter, RBAC..." autocomplete="off" />
+        <button class="kbd" onclick="closeSearchModal()">ESC</button>
+      </div>
+      <div class="search-results" id="searchResults"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Copied!</div>
+
+  <script src="data-lessons.js?v=6"></script>
+  <script src="data-lessons-extra.js"></script>
+  <script src="data-lessons-workloads.js"></script>
+  <script src="data-lessons-ops.js"></script>
+  <script src="data-lessons-cks.js"></script>
+  <script src="data-extra.js?v=5"></script>
+  <script src="data-scenarios.js?v=3"></script>
+  <script src="data-references.js?v=6"></script>
+  <script src="data-channels.js?v=1"></script>
+  <script src="data-operators.js?v=1"></script>
+  <script src="app.js?v=14"></script>
+</body>
+</html>

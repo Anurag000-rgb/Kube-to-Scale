@@ -1,0 +1,90 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1. Add `m15` and `m16` module video defaults in `data-references.js`": [
+      {
+        "executionId": "e3de9b39-9c51-4a8c-ac21-73e862c8d8bc",
+        "chatSessionId": "sess_ffaabfcf-5d6f-4339-bfb5-5afe322a35ce",
+        "timestamp": 1795571451285
+      },
+      {
+        "executionId": "e3de9b39-9c51-4a8c-ac21-73e862c8d8bc",
+        "chatSessionId": "sess_ffaabfcf-5d6f-4339-bfb5-5afe322a35ce",
+        "timestamp": 1795571454839
+      },
+      {
+        "executionId": "e3de9b39-9c51-4a8c-ac21-73e862c8d8bc",
+        "chatSessionId": "sess_ffaabfcf-5d6f-4339-bfb5-5afe322a35ce",
+        "timestamp": 1795571509462
+      }
+    ],
+    "2. Add `LESSON_REFS` entries for the six Module 11 operator-only lessons in `data-references.js`": [
+      {
+        "executionId": "e3de9b39-9c51-4a8c-ac21-73e862c8d8bc",
+        "chatSessionId": "sess_ffaabfcf-5d6f-4339-bfb5-5afe322a35ce",
+        "timestamp": 1795571451363
+      },
+      {
+        "executionId": "e3de9b39-9c51-4a8c-ac21-73e862c8d8bc",
+        "chatSessionId": "sess_ffaabfcf-5d6f-4339-bfb5-5afe322a35ce",
+        "timestamp": 1795571512602
+      },
+      {
+        "executionId": "e3de9b39-9c51-4a8c-ac21-73e862c8d8bc",
+        "chatSessionId": "sess_ffaabfcf-5d6f-4339-bfb5-5afe322a35ce",
+        "timestamp": 1795571626885
+      }
+    ],
+    "3. Add `LESSON_REFS` entries for the five Module 15 operator lessons in `data-references.js`": [
+      {
+        "executionId": "e3de9b39-9c51-4a8c-ac21-73e862c8d8bc",
+        "chatSessionId": "sess_ffaabfcf-5d6f-4339-bfb5-5afe322a35ce",
+        "timestamp": 1795571451396
+      },
+      {
+        "executionId": "e3de9b39-9c51-4a8c-ac21-73e862c8d8bc",
+        "chatSessionId": "sess_ffaabfcf-5d6f-4339-bfb5-5afe322a35ce",
+        "timestamp": 1795571630145
+      },
+      {
+        "executionId": "e3de9b39-9c51-4a8c-ac21-73e862c8d8bc",
+        "chatSessionId": "sess_ffaabfcf-5d6f-4339-bfb5-5afe322a35ce",
+        "timestamp": 1795571793181
+      }
+    ],
+    "4. Add `LESSON_REFS` entries for the four Module 16 operator lessons in `data-references.js`": [
+      {
+        "executionId": "e3de9b39-9c51-4a8c-ac21-73e862c8d8bc",
+        "chatSessionId": "sess_ffaabfcf-5d6f-4339-bfb5-5afe322a35ce",
+        "timestamp": 1795571451429
+      },
+      {
+        "executionId": "e3de9b39-9c51-4a8c-ac21-73e862c8d8bc",
+        "chatSessionId": "sess_ffaabfcf-5d6f-4339-bfb5-5afe322a35ce",
+        "timestamp": 1795571796241
+      },
+      {
+        "executionId": "e3de9b39-9c51-4a8c-ac21-73e862c8d8bc",
+        "chatSessionId": "sess_ffaabfcf-5d6f-4339-bfb5-5afe322a35ce",
+        "timestamp": 1795572038122
+      }
+    ],
+    "5. Headless and in-browser verification of operator resources": [
+      {
+        "executionId": "e3de9b39-9c51-4a8c-ac21-73e862c8d8bc",
+        "chatSessionId": "sess_ffaabfcf-5d6f-4339-bfb5-5afe322a35ce",
+        "timestamp": 1795571451457
+      },
+      {
+        "executionId": "e3de9b39-9c51-4a8c-ac21-73e862c8d8bc",
+        "chatSessionId": "sess_ffaabfcf-5d6f-4339-bfb5-5afe322a35ce",
+        "timestamp": 1795572041685
+      },
+      {
+        "executionId": "e3de9b39-9c51-4a8c-ac21-73e862c8d8bc",
+        "chatSessionId": "sess_ffaabfcf-5d6f-4339-bfb5-5afe322a35ce",
+        "timestamp": 1795572075901
+      }
+    ]
+  }
+}
