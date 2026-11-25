@@ -56,8 +56,7 @@ kube-to-scale/
 ├── data-scenarios.js       # Scenario Q&A bank
 ├── data-references.js      # Per-lesson/module doc references & curated YouTube videos
 ├── data-channels.js        # Curated YouTube channels for the Resources view
-│
-└── .kiro/specs/            # Spec-driven development artifacts (requirements/design/tasks)
+
 ```
 
 ### Data model
