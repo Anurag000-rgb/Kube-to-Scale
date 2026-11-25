@@ -158,11 +158,13 @@ code {
 .cert-pill.active { background: var(--ink); color: #FBF9F5; }
 
 .mobile-subbar {
-  display: none; padding: 7px 10px; gap: 4px;
+  display: none; padding: 6px 8px; gap: 4px;
   background: var(--bg-sidebar); border-bottom: 1.5px solid var(--border-soft);
+  overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
 }
+.mobile-subbar::-webkit-scrollbar { display: none; }
 .mobile-subbar .nav-tab {
-  flex: 1; padding: 5px 4px; font-size: 11.5px;
+  flex: 1 0 auto; padding: 5px 6px; font-size: 10.8px; white-space: nowrap;
 }
 
 /* =========================================================================
@@ -453,9 +455,16 @@ code {
 }
 .ref-link-wrap:hover { background: var(--mint-soft); border-color: var(--border); }
 .ref-link-item {
-  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 8px;
   font-family: var(--font-mono); font-size: 11px; font-weight: 700;
   color: var(--ink); text-decoration: none;
+}
+.ref-link-item span:first-child { min-width: 0; overflow-wrap: anywhere; word-break: break-word; line-height: 1.38; }
+.badge-chip {
+  font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+  padding: 3px 8px; border-radius: 7px; background: var(--bg-canvas);
+  border: 1.2px solid var(--border-soft); color: var(--ink-soft);
+  white-space: nowrap; flex-shrink: 0;
 }
 .ref-link-summary {
   font-family: var(--font-sans); font-size: 11.4px; font-weight: 400;
@@ -732,12 +741,14 @@ code {
   border: 1.5px solid var(--border); border-radius: var(--r-lg);
   box-shadow: var(--sh-md); padding: 20px 22px; display: flex; flex-direction: column; gap: 14px;
 }
-.res-hero-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
-.res-stats-row { display: flex; gap: 8px; flex-wrap: wrap; flex-shrink: 0; }
+.res-hero-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; flex-wrap: wrap; }
+.res-hero-top > div { min-width: 0; max-width: 100%; }
+.res-stats-row { display: flex; gap: 6px; flex-wrap: wrap; max-width: 100%; }
 .res-stat-pill {
   font-family: var(--font-mono); font-size: 10.6px; font-weight: 700;
   padding: 5px 10px; border-radius: 9px; background: var(--bg-card);
   border: 1.4px solid var(--border); box-shadow: var(--sh-sm); color: var(--ink);
+  white-space: nowrap;
 }
 .res-toolbar {
   display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;
@@ -757,7 +768,7 @@ code {
   min-width: 0; transition: transform .13s ease, box-shadow .13s ease;
 }
 .channel-card:hover { transform: translateY(-2px); box-shadow: 3px 4px 0 var(--border); }
-.channel-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.channel-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; flex-wrap: wrap; }
 .channel-id-wrap { display: flex; align-items: flex-start; gap: 11px; min-width: 0; }
 .channel-avatar {
   width: 42px; height: 42px; border-radius: 11px; border: 1.5px solid var(--border);
@@ -868,4 +879,16 @@ code {
   .legend-hint { display: none; }
   .scenario-card-head { flex-wrap: wrap; }
   .scenario-search { min-width: 0; flex: 1; width: 100%; }
+  #view-practice, #view-lab, #view-cheatsheets, #view-resources { padding: 14px 12px 76px; }
+  .res-hero-card { padding: 14px 14px; gap: 11px; }
+  .res-hero-card .page-title { font-size: 20px; line-height: 1.22; }
+  .res-hero-card .page-sub { font-size: 11.2px; }
+  .res-stat-pill { font-size: 9.8px; padding: 4px 8px; }
+  #resourceModePills { width: 100%; flex-wrap: wrap; gap: 4px; }
+  #resourceModePills .cert-pill { flex: 1 1 120px; text-align: center; font-size: 10px; padding: 6px 6px; white-space: nowrap; }
+  #resourceCertPills { width: 100%; flex-wrap: wrap; gap: 3px; }
+  #resourceCertPills .cert-pill { flex: 1 1 auto; text-align: center; font-size: 9.8px; padding: 4px 6px; white-space: nowrap; }
+  .res-search-input { width: 100%; min-width: 0; font-size: 12px; }
+  .channel-card, .talk-card { padding: 13px 13px; gap: 9px; }
+  .channel-avatar { width: 36px; height: 36px; font-size: 11.5px; }
 }
